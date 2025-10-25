@@ -9,6 +9,7 @@
     var upgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
     var priceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
     var money = 0
+    var pPoint = 0
     var prestigePoints = 0
     const music = ["music/1.mp3","music/2.mp3","music/3.mp3","music/4.mp3","music/5.mp3"]
     var audio = new Audio(music[0])
@@ -144,8 +145,8 @@
 
     function prestige(view){
         if (money > 1000000){
+            pPoint = 0
             let index = 0
-            let pPoint = 0
             progressSpeeds.forEach(function() {
                 pPoint += Math.floor(progressSpeeds[index] * 10)
             })
