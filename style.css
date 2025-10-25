@@ -20,23 +20,27 @@ body{
   left: 0.6em;
   background: #242424;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(34, 34, 34, 0.4);
+  box-shadow: 0 4px 12px rgba(58, 58, 58, 0.4);
   border: rgb(19, 19, 19) solid 4px;
   overflow: hidden;
   width: 140px;
-  transition: width 0.5s ease, height 0.5s ease;
+  transition: width 0.5s ease, height 0.5s ease, border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   
   cursor: pointer;
 }
-
+.upgrade-tab:hover {
+  box-shadow: 0 4px 12px rgba(42, 42, 42, 0.4);
+  border: rgb(10, 10, 10) solid 4px;
+}
 
 .upgrade-header {
   background: #2d2d2d;
   padding: 10px 14px;
   font-weight: bold;
   text-align: center;
-  border-bottom: 3px solid #1d1d1d;
-  border-top: 3px solid #363636;
+  border: #292929 solid 4px;
+  border-bottom: 4px solid #1d1d1d;
+  border-top: 4px solid #363636;
   
 }
 
@@ -71,12 +75,12 @@ body{
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
+  font-family: 'Alan Sans', sans-serif;
+  box-shadow: 0 1px 9px rgba(78, 78, 78, 0.4);
 }
 .upgrade-content button:hover {
   background: rgb(27, 27, 27);
-}
-button{
-  box-shadow: 0 1px 9px rgba(78, 78, 78, 0.4);
+  box-shadow: 0 1px 9px rgba(118, 118, 118, 0.4)
 }
 
 #moneyDisplay{
