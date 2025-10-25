@@ -9,6 +9,7 @@
     var upgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
     var priceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
     var money = 0
+    var prestigePoints = 0
     const music = ["/music/1.mp3","/music/2.mp3","/music/3.mp3","/music/4.mp3","/music/5.mp3"]
     var audio = new Audio(music[0])
 
@@ -24,6 +25,7 @@
 
         //circles themselves
         ctx.lineWidth = width / 103
+        ctx.lineCap = 'round'
 
         if (unlocks[5]) {
             ctx.beginPath()
@@ -88,7 +90,7 @@
                 if (progressSpeeds[index] < 1) {
                     progresses[index] = 0
                 }
-                money += spinMoney[index]
+                money += spinMoney[index] * (1+(prestigePoints / 50))
                 document.getElementById("moneyDisplay").innerText = "Money: " + money
             }
             index++
@@ -109,7 +111,7 @@
 
     function saveGame() {
         let shitCrypt = (v) => btoa(JSON.stringify(v)).split("").reverse().join("");
-        let data = (shitCrypt({ m: money, p: progresses, ps: progressSpeeds, u: unlocks, uc: upgradeCosts, s: spinMoney, pe: upgradePerks, mu: priceMult }))
+        let data = (shitCrypt({ m: money, p: progresses, ps: progressSpeeds, u: unlocks, uc: upgradeCosts, s: spinMoney, pe: upgradePerks, mu: priceMult, pp: prestigePoints }))
         localStorage.setItem("ZjkfJsakjbfUWoasdOIawho", data)
     }
 
@@ -118,24 +120,52 @@
         let save = localStorage.getItem("ZjkfJsakjbfUWoasdOIawho")
         if (!save) return console.warn("No save found!");
         let data = (unShit(save))
-        progresses = data.p
-        money = data.m
-        progressSpeeds = data.ps
-        unlocks = data.u
-        upgradeCosts = data.uc
-        spinMoney = data.s
-        upgradePerks = data.pe
-        priceMult = data.mu
-        document.getElementById("moneyDisplay").innerText = "Money: " + money
-        document.getElementById("upg" + (1)).innerText = "1. +" + upgradePerks[0] + " Speed\nPrice: " + upgradeCosts[0] + "$"
-        document.getElementById("upg" + (2)).innerText = "2. +" + upgradePerks[1] + " Speed\nPrice: " + upgradeCosts[1] + "$"
-        document.getElementById("upg" + (3)).innerText = "3. +" + upgradePerks[2] + " Speed\nPrice: " + upgradeCosts[2] + "$"
-        document.getElementById("upg" + (4)).innerText = "4. +" + upgradePerks[3] + " Speed\nPrice: " + upgradeCosts[3] + "$"
-        document.getElementById("upg" + (5)).innerText = "5. +" + upgradePerks[4] + " Speed\nPrice: " + upgradeCosts[4] + "$"
-        document.getElementById("upg" + (6)).innerText = "6. +" + upgradePerks[5] + " Speed\nPrice: " + upgradeCosts[5] + "$"
+        progresses = data.p ?? [0, 0, 0, 0, 0, 0]
+        money = data.m ?? 0
+        progressSpeeds = data.ps ?? [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003]
+        unlocks = data.u ?? [true, false, false, false,false,false]
+        upgradeCosts = data.uc ?? [75, 250, 5000, 25000, 1000000, 25000000]
+        spinMoney = data.s ?? [10, 100, 500, 2500, 10000, 1000000]
+        upgradePerks = data.pe ?? [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
+        priceMult = data.mu ?? [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
+        prestigePoints = data.pp ?? 0
+        updateTexts()
     }
 
     setInterval(saveGame, 10000)
+
+    function updateTexts(){
+        let index = 0
+        unlocks.forEach(function() {
+            document.getElementById("upg" + (index+1)).innerText = (index+1)+". +" + upgradePerks[index] + " Speed\nPrice: " + upgradeCosts[index] + "$"
+            index++
+        })
+    }
+
+    function prestige(view){
+        if (money > 1000000){
+            let index = 0
+            let pPoint = 0
+            progressSpeeds.forEach(function() {
+                pPoint += Math.floor(progressSpeeds[index] * 10)
+            })
+            pPoint+=Math.floor(money/100000)
+            if (view) return pPoint
+        }else return 0
+        if (!view){
+            money = 0
+            progresses = [0, 0, 0, 0, 0, 0]
+            progressSpeeds = [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003]
+            unlocks = [true, false, false, false, false, false]
+            upgradeCosts = [75, 250, 5000, 25000, 1000000, 25000000]
+            spinMoney = [10, 100, 500, 2500, 10000, 1000000]
+            upgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
+            priceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
+            prestigePoints += pPoint
+            saveGame()
+            updateTexts()
+        }
+    }
 
     var buttons = document.querySelectorAll('.upg')
     buttons.forEach((b) => {
@@ -149,15 +179,26 @@
         if (e.target.tagName.toLowerCase() === 'button') return;
         this.classList.toggle('active');
     });
-
+    document.getElementById('prestige-button').onclick = () => {
+        document.querySelector('.prestige-popup').classList.add('active');
+        document.getElementById('prestige-amount').innerText = "That will give you "+prestige(true)+" prestige points"
+    };
+    document.getElementById('prestige-confirm').onclick = () => {
+        document.querySelector('.prestige-popup').classList.remove('active');
+        prestige(false)
+    };
+    document.getElementById('prestige-decline').onclick = () => {
+        document.querySelector('.prestige-popup').classList.remove('active');
+    };
     addEventListener('click', () => {
         audio.play();
         audio.volume = 0.2
         audio.currentTime
         audio.addEventListener('ended', function () {
+            if (!audio.onplay){
             var next = Math.round(Math.random()*5)
             audio.src = music[next]
-            audio.play()
+            audio.play()}
         })
     });
 })()

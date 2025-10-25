@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap" rel="stylesheet">
     <title>Circles</title>
 </head>
+
 <body>
     <canvas id="gameCanvas"></canvas>
     <h1 id="moneyDisplay">Money: 0</h1>
@@ -23,6 +25,18 @@
             <button class="upg" id="upg6"> 6. +0.001 Speed<br>Price: 2500000$</button>
         </div>
     </div>
+    <button id="prestige-button"><img src="art/rebirth.svg" id="rebirth-icon"></button>
+    <div class="prestige-popup">
+        <div class="prestige-content">
+            <p>Are you sure you want to prestige?</p>
+            <p id="prestige-amount">That will give you 0 prestige points</p>
+            <button id="prestige-confirm">Yes</button>
+            <button id="prestige-decline">No</button>
+        </div>
+    </div>
+
+
     <script src="script.js"></script>
 </body>
+
 </html>
