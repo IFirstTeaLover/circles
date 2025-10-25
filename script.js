@@ -79,6 +79,7 @@ function upgrade(id) {
             unlocks[id + 1] = true
             upgradeCosts[id] = Math.round(upgradeCosts[id] * priceMult[id])
             document.getElementById("upg"+(id+1)).innerText = "1. +"+upgradePerks[id]+"0.01 Speed\nPrice: "+upgradeCosts[id]+"$"
+            document.getElementById("moneyDisplay").innerText = "Money: "+money
         }
     }
 }
