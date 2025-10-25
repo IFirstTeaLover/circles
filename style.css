@@ -9,6 +9,7 @@ body{
     margin: 0;
     font-family: 'Alan Sans', sans-serif;
     color: white;
+    overflow: hidden;
 }
 
 
@@ -73,4 +74,14 @@ body{
 }
 .upgrade-content button:hover {
   background: rgb(27, 27, 27);
+}
+button{
+  box-shadow: 0 1px 9px rgba(78, 78, 78, 0.4);
+}
+
+#moneyDisplay{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -100%);
 }

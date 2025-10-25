@@ -11,13 +11,14 @@
 </head>
 <body>
     <canvas id="gameCanvas"></canvas>
+    <h1 id="moneyDisplay">Money: 0</h1>
     <div class="upgrade-tab">
         <div class="upgrade-header">Upgrades</div>
         <div class="upgrade-content">
-            <button>1. +1 Speed</button>
-            <button>2. +0.1 Speed</button>
-            <button>2. +0.1 Speed</button>
-            <button>2. +0.1 Speed</button>
+            <button onclick="upgrade(0)" id="upg1">1. +0.01 Speed<br>Price: 75$</button>
+            <button onclick="upgrade(1)" id="upg2">2. +0.003 Speed<br>Price: 250$</button>
+            <button onclick="upgrade(2)" id="upg3"> 3. +0.001 Speed<br>Price: 5000$</button>
+            <button onclick="upgrade(3)" id="upg3">4. +0.001 Speed</button>
         </div>
     </div>
     <script src="script.js"></script>
