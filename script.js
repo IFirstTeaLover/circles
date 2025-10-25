@@ -10,7 +10,7 @@
     var priceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
     var money = 0
     var prestigePoints = 0
-    const music = ["/music/1.mp3","/music/2.mp3","/music/3.mp3","/music/4.mp3","/music/5.mp3"]
+    const music = ["music/1.mp3","music/2.mp3","music/3.mp3","music/4.mp3","music/5.mp3"]
     var audio = new Audio(music[0])
 
     loadGame()
