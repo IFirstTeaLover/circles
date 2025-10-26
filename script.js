@@ -1,26 +1,27 @@
 (async () => {
     var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
-    var progresses = [0, 0, 0, 0, 0, 0]
-    var progressSpeeds = [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003]
-    var unlocks = [true, false, false, false, false, false]
-    var upgradeCosts = [75, 250, 5000, 25000, 1000000, 25000000]
-    var spinMoney = [10, 100, 500, 2500, 10000, 1000000]
-    var upgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
-    var priceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
+    var progresses = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var progressSpeeds = [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003, 0.0003, 0.00028, 0.00027]
+    var unlocks = [true, false, false, false, false, false, false, false, false]
+    var upgradeCosts = [75, 250, 5000, 25000, 1000000, 25000000, 250000000, 1000000000, 100000000000]
+    var spinMoney = [10, 100, 500, 2500, 10000, 1000000, 5000000, 10000000, 50000000]
+    var upgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007, 0.0007, 0.00068, 0.00067]
+    var priceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035, 1.0025, 1.0028, 1.003]
 
-    var dprogresses = [0, 0, 0, 0, 0, 0]
-    var dprogressSpeeds = [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003]
-    var dunlocks = [true, false, false, false, false, false]
-    var dupgradeCosts = [75, 250, 5000, 25000, 1000000, 25000000]
-    var dspinMoney = [10, 100, 500, 2500, 10000, 1000000]
-    var dupgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
-    var dpriceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
+    var dprogresses = [0, 0, 0, 0, 0, 0,0,0,0]
+    var dprogressSpeeds = [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003, 0.0003, 0.00028, 0.00027]
+    var dunlocks = unlocks = [true, false, false, false, false, false, true, true, true]
+    var dupgradeCosts = [75, 250, 5000, 25000, 1000000, 25000000, 250000000, 1000000000, 100000000000]
+    var dspinMoney = [10, 100, 500, 2500, 10000, 1000000, 5000000, 10000000, 50000000]
+    var dupgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007, 0.0007, 0.00068, 0.00067]
+    var dpriceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035, 1.0025, 1.0028, 1.003]
 
     let oldTime
     let afkTime = 0
     let moneyPerSecond = 0
     var money = 0
+    var moneyBackup = 0
     var pPoint = 0
     var prestigePoints = 0
     const music = ["music/1.mp3","music/2.mp3","music/3.mp3","music/4.mp3","music/5.mp3"]
@@ -40,50 +41,36 @@
         ctx.lineWidth = width / 103
         ctx.lineCap = 'round'
 
-        if (unlocks[5]) {
-            ctx.beginPath()
-            ctx.arc(getCenter(0, "x"), getCenter(height / 30, "y"), width / 9.1, -Math.PI / 2, (-Math.PI / 2) + progresses[5] * Math.PI * 2)
-            ctx.strokeStyle = '#24d1f0ff'
-            ctx.stroke()
-        }
+        drawCircle('#f02472ff', 6.78, 8)
 
-        if (unlocks[4]) {
-            ctx.beginPath()
-            ctx.arc(getCenter(0, "x"), getCenter(height / 30, "y"), width / 10.3, -Math.PI / 2, (-Math.PI / 2) + progresses[4] * Math.PI * 2)
-            ctx.strokeStyle = '#24f076ff'
-            ctx.stroke()
-        }
+        drawCircle('#af24f0ff', 7.4, 7)
 
-        if (unlocks[3]) {
-            ctx.beginPath()
-            ctx.arc(getCenter(0, "x"), getCenter(height / 30, "y"), width / 11.85, -Math.PI / 2, (-Math.PI / 2) + progresses[3] * Math.PI * 2)
-            ctx.strokeStyle = '#83f024ff'
-            ctx.stroke()
-        }
+        drawCircle('#3524f0ff', 8.15, 6)
 
-        if (unlocks[2]) {
-            ctx.beginPath()
-            ctx.arc(getCenter(0, "x"), getCenter(height / 30, "y"), width / 14, -Math.PI / 2, (-Math.PI / 2) + progresses[2] * Math.PI * 2)
-            ctx.strokeStyle = '#f0ea24ff'
-            ctx.stroke()
-        }
+        drawCircle('#24d1f0ff', 9.1, 5)
 
-        if (unlocks[1]) {
-            ctx.beginPath()
-            ctx.arc(getCenter(0, "x"), getCenter(height / 30, "y"), width / 17, -Math.PI / 2, (-Math.PI / 2) + progresses[1] * Math.PI * 2)
-            ctx.strokeStyle = '#e7922aff'
-            ctx.stroke()
-        }
+        drawCircle('#24f076ff', 10.3, 4)
 
-        ctx.beginPath()
-        ctx.arc(getCenter(0, "x"), getCenter(height / 30, "y"), width / 22, -Math.PI / 2, (-Math.PI / 2) + progresses[0] * Math.PI * 2)
-        ctx.strokeStyle = 'rgba(222, 34, 34, 1)'
-        ctx.stroke()
+        drawCircle('#83f024ff', 11.85, 3)
 
+        drawCircle('#f0ea24ff', 14, 2)
 
+        drawCircle('#e7922aff', 17, 1)
+
+        drawCircle('rgba(222, 34, 34, 1)', 22, 0)
 
         progress()
         requestAnimationFrame(render) // keep on bottom!
+    }
+
+    function drawCircle(color, size, id){
+
+        if (unlocks[id]) {
+            ctx.beginPath()
+            ctx.arc(getCenter(0, "x"), getCenter(height / 30, "y"), width / size, -Math.PI / 2, (-Math.PI / 2) + progresses[id] * Math.PI * 2)
+            ctx.strokeStyle = color
+            ctx.stroke()
+        }
     }
 
     function getCenter(size, axis) {
@@ -146,6 +133,12 @@
         if (progresses.length < dprogresses.length){
             for (let i = progresses.length; i < dprogresses.length; i++) {
                 progresses.push(dprogresses[i])
+                progressSpeeds.push(dprogressSpeeds[i])
+                unlocks.push(dunlocks[i])
+                upgradeCosts.push(dupgradeCosts[i])
+                spinMoney.push(dspinMoney[i])
+                upgradePerks.push(dupgradePerks[i])
+                priceMult.push(dpriceMult[i])
             }
         }
         updateTexts()
@@ -193,7 +186,9 @@
            oldTime = Date.now() 
         }else{
             afkTime = Math.round((Date.now() - oldTime)/1000)
+            moneyBackup = money
             money += moneyPerSecond * afkTime
+            if (isNaN(money)) money = moneyBackup
         }
     })
 

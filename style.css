@@ -46,23 +46,23 @@ body{
 
 
 .upgrade-tab.active {
-  width: 220px;
+  width: 240px;
 }
 .upgrade-tab.active .upgrade-content {
-  max-height: 200px;
+  max-height: 400px;
 }
 .upgrade-content {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.5s ease, padding 0.5s ease;
+    transition: max-height 0.3s ease, padding 0.5s ease;
     gap: 8px;
     padding: 0 10px;  
 }
 
 .upgrade-tab.active .upgrade-content {
-    max-height: 500px;
+    max-height: 700px;
     padding: 10px;     
 }
 
@@ -85,7 +85,7 @@ body{
 
 #moneyDisplay{
     position: absolute;
-    top: 20%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -100%);
 }
@@ -162,7 +162,7 @@ body{
 @keyframes popupIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.8);
   }
   to {
     opacity: 1;
