@@ -136,10 +136,12 @@
     setInterval(saveGame, 10000)
 
     function updateTexts(){
+        document.getElementById("moneyDisplay").innerText = "Money: " + money
         let index = 0
         unlocks.forEach(function() {
+            try{
             document.getElementById("upg" + (index+1)).innerText = (index+1)+". +" + upgradePerks[index] + " Speed\nPrice: " + upgradeCosts[index] + "$"
-            index++
+            if (index < unlocks.length - 2)index++}catch(e){console.warn(e)}
         })
     }
 
