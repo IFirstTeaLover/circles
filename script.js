@@ -8,6 +8,18 @@
     var spinMoney = [10, 100, 500, 2500, 10000, 1000000]
     var upgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
     var priceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
+
+    var dprogresses = [0, 0, 0, 0, 0, 0]
+    var dprogressSpeeds = [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003]
+    var dunlocks = [true, false, false, false, false, false]
+    var dupgradeCosts = [75, 250, 5000, 25000, 1000000, 25000000]
+    var dspinMoney = [10, 100, 500, 2500, 10000, 1000000]
+    var dupgradePerks = [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
+    var dpriceMult = [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
+
+    let oldTime
+    let afkTime = 0
+    let moneyPerSecond = 0
     var money = 0
     var pPoint = 0
     var prestigePoints = 0
@@ -81,17 +93,18 @@
 
     function progress() {
         var index = 0
+        moneyPerSecond = 0
         progresses.forEach(function () {
             if (progressSpeeds[index] >= 1) {
                 progresses[index] = 1
             }
-
+            moneyPerSecond += Math.round((spinMoney[index] * progressSpeeds[index]) * (1+(prestigePoints/50)))
             if (unlocks[index]) progresses[index] += progressSpeeds[index]
             if (progresses[index] >= 1) {
                 if (progressSpeeds[index] < 1) {
                     progresses[index] = 0
                 }
-                money += spinMoney[index] * (1+(prestigePoints / 50))
+                money += Math.round(spinMoney[index] * (1+(prestigePoints / 50)))
                 document.getElementById("moneyDisplay").innerText = "Money: " + money
             }
             index++
@@ -121,7 +134,7 @@
         let save = localStorage.getItem("ZjkfJsakjbfUWoasdOIawho")
         if (!save) return console.warn("No save found!");
         let data = (unShit(save))
-        progresses = data.p ?? [0, 0, 0, 0, 0, 0]
+        progresses = data.p ?? dprogresses
         money = data.m ?? 0
         progressSpeeds = data.ps ?? [0.01, 0.002, 0.001, 0.0006, 0.0004, 0.0003]
         unlocks = data.u ?? [true, false, false, false,false,false]
@@ -130,6 +143,11 @@
         upgradePerks = data.pe ?? [0.01, 0.003, 0.001, 0.001, 0.0008, 0.0007]
         priceMult = data.mu ?? [1.05, 1.015, 1.004, 1.005, 1.003, 1.0035]
         prestigePoints = data.pp ?? 0
+        if (progresses.length < dprogresses.length){
+            for (let i = progresses.length; i < dprogresses.length; i++) {
+                progresses.push(dprogresses[i])
+            }
+        }
         updateTexts()
     }
 
@@ -169,6 +187,15 @@
             updateTexts()
         }
     }
+
+    document.addEventListener('visibilitychange', () =>{
+        if (document.visibilityState == "hidden"){
+           oldTime = Date.now() 
+        }else{
+            afkTime = Math.round((Date.now() - oldTime)/1000)
+            money += moneyPerSecond * afkTime
+        }
+    })
 
     var buttons = document.querySelectorAll('.upg')
     buttons.forEach((b) => {
