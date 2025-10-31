@@ -203,7 +203,7 @@
                 upgradePerks.push(dupgradePerks[i])
                 spinMultiplier.push(dspinMultiplier[i])
                 spinMultiplierIncrease.push(dspinMultiplierIncrease[i])
-                upgradeAmount.push(duupgradeAmount[i])
+                upgradeAmount.push(dupgradeAmount[i])
             }
         }
     }
