@@ -166,11 +166,13 @@
         try{
             if (save.version == gameVersion) { //Dont ask why it works, Okay??
                 console.warn("Incompatible save version!")
+                localStorage.clear()
                 fillSave()
                 saveGame()
             }
         }catch{
             console.warn("Incompatible save version!(No version found)")
+            localStorage.clear()
             fillSave()
             saveGame()
         }
